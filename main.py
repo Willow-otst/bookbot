@@ -36,6 +36,37 @@ def generateCharReport(path_to_file):
     return report
 
 
+def generateWordReport(path_to_file):
+    text = getText(path_to_file)
+    text = text.lower()
+    
+    chars = countChars(path_to_file)
+    sortedChars = sorted(chars)
+    for sChar in sortedChars:
+        if not sChar.isalpha() and sChar != " ":
+            text = text.replace(sChar, " ")
+    
+    words = text.split()
+    wordCount = {}
+    for word in words:
+        if word in wordCount:
+            wordCount[word] += 1
+        else:
+            wordCount[word] = 1
+
+    sWords = sorted(wordCount)
+
+    report = f"--- Report words in {path_to_file} ---\n\n"
+    report += f"{len(wordCount)} unique words found in file.\n\n"
+    
+    for sWords in sWords:
+        if wordCount[sWords] > 1000:
+            report += f"'{sWords}' was found {wordCount[sWords]} times.\n"
+    report += f"\n--- End Report ---"
+    
+    return report
+
+
 if __name__ == '__main__':
     path = "books/frankenstein.txt"
 
@@ -43,3 +74,4 @@ if __name__ == '__main__':
     #print(countWords(path))
     #print(countChars(path))
     print(generateCharReport(path))
+    #print(generateWordReport(path))
