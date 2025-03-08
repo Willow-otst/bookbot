@@ -1,3 +1,5 @@
+# from stats import
+import sys
 
 def getText(path_to_file):
     with open(path_to_file) as f:
@@ -26,11 +28,12 @@ def generateCharReport(path_to_file):
     sortedChars = sorted(chars)
 
     report = f"--- Report of {path_to_file} ---\n\n"
-    report += f"{countWords(path_to_file)} words found in file.\n\n"
+    report += f"{countWords(path_to_file)} words found in the document\n\n"
     
     for sChar in sortedChars:
         if sChar.isalpha():
             report += f"The '{sChar}' char was found {chars[sChar]} times.\n"
+            report += f"'{sChar}: {chars[sChar]}'"
     report += f"\n--- End Report ---"
     
     return report
@@ -57,7 +60,7 @@ def generateWordReport(path_to_file):
     sWords = sorted(wordCount)
 
     report = f"--- Report words in {path_to_file} ---\n\n"
-    report += f"{len(wordCount)} unique words found in file.\n\n"
+    report += f"{len(wordCount)} unique words found in the document\n\n"
     
     for sWords in sWords:
         if wordCount[sWords] > 1000:
@@ -68,7 +71,15 @@ def generateWordReport(path_to_file):
 
 
 if __name__ == '__main__':
-    path = "books/frankenstein.txt"
+    # path = "books/frankenstein.txt"
+
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
+    path = sys.argv[1]
+
+    # TODO : Add raise case for invalid path
 
     #print(getText(path))
     #print(countWords(path))
